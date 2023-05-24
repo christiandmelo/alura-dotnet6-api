@@ -5,7 +5,9 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("FilmeConnection");
+builder.Configuration.AddEnvironmentVariables();
+
+var connectionString = $"server={Environment.GetEnvironmentVariable("DB_HOST")};database=filme;user={Environment.GetEnvironmentVariable("DB_USER")};password={Environment.GetEnvironmentVariable("DB_PASSWORD")}";
 
 builder.Services.AddDbContext<FilmeContext>(opts =>
     opts.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -25,16 +27,20 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+await using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<FilmeContext>();
+await db.Database.MigrateAsync();
 
 app.Run();

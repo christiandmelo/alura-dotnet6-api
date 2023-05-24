@@ -12,11 +12,14 @@
     "FilmesApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:7106;http://localhost:5106",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DB_USER": "root",
+        "DB_PASSWORD": "1q2w3e4r5t",
+        "DB_HOST": "localhost"
       }
     }
   }

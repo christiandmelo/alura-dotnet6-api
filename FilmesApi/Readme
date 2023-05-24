@@ -1,0 +1,14 @@
+Comando para criar imagem docker
+docker build -t christiandmelo/alura-filmes-api:latest .
+
+Comando para iniciar imagem
+docker run -e DB_USER=root -e DB_PASSWORD=1q2w3e4r5t -e DB_HOST=localhost -p 80:80 christiandmelo/alura-filmes-api
+
+
+Comando para subir imagem no docker hub
+docker tag alura-filmes-api christiandmelo/alura-filmes-api (Serve caso sua imagem nao tenha o nome do seu usuario)
+docker push christiandmelo/alura-filmes-api:latest
+ - Antes tem que logar com: docker login
+
+Comando para executar o arquivo yaml
+docker-compose -f FilmesApi.yaml up
